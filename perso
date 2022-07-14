@@ -33,7 +33,3 @@ grep -q ".bash_env" ${file} || echo "
 [ -f \${HOME}/.bash_functions ] && . \${HOME}/.bash_functions" >> ${file}
 
 . ${file}
-
-########################  END
-
-_partadd "${_PART}" "${_FILE_DONE}"
