@@ -21,7 +21,7 @@ file=${HOME}/.bash_env
 file_from=${_PATH_BS}/conf/.bash_env
 _keepmv ${file}
 _eval ln -s ${file_from} ${file}
-_eval sed -i "s|_PATH_BS|${_PATH_BS}|" ${file_from}
+sed -i "s|_PATH_BS|${_PATH_BS}|" ${file_from}
 
 _echot "------- .bashrc env"
 file=${HOME}/.bashrc
@@ -33,9 +33,27 @@ grep -q ".bash_env" ${file} || echo "
 [ -f \${HOME}/.bash_functions ] && . \${HOME}/.bash_functions" >> ${file}
 . ${file}
 
-_echot "------- firefox tweaks"
-path=${HOME}/.mozilla/firefox/${USER}
-if [ -d "${path}" ]; then
-	_eval ln -s "${_PATH_BS}/conf/user.js" ${path}
-	_eval chown ${USER}:${USER} ${path}
-fi
+_echot "------- language fr"
+packages="hunspell-fr hyphen-fr mythes-fr tesseract-data-fra"
+packages+=" firefox-i18n-fr libreoffice-still-fr"
+${_CMD_INS} ${packages} && _partadd "${packages}" ${_FILE_PCK} \
+	|| { _echoE "Unable to install: ${packages}"; return 1; }
+
+_echot "------- aur"
+packages="libreoffice-extension-grammalecte-fr"
+# libreoffice-extension-languagetool papirus-libreoffice-theme 
+_install_aur ${packages}
+
+_echot "------- git config"
+git config --global user.name "aguy tech"
+git config --global user.email aguytech@free.fr
+git config --global core.editor vim
+git config --global merge.tool meld
+
+file=${HOME}/.gitconfig
+grep -q '^[alias]' ${file} || echo -e "
+[alias]
+\tci = commit
+\tco = checkout
+\tst = status
+\tbr = branch" >> ${file}

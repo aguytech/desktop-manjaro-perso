@@ -1,0 +1,24 @@
+#!/bin/bash
+
+########################  FIREFOX
+
+_echot "------- firefox profile"
+_echoA "Choose the right path to create a profile & close application"
+_eval firefox --ProfileManager
+
+_echot "------- firefox user.js"
+path=${HOME}/.mozilla/firefox/${USER}
+if [ -d "${path}" ]; then
+	_eval ln -s "${_PATH_BS}/conf/user.js" ${path}/user.js
+	_eval chown ${USER}:${USER} ${path}
+fi
+
+########################  THUNDERBIRD
+
+_echot "------- thunderbird update"
+_evalr apt  install -y thunderbird
+
+_echot "------- thunderbird profile"
+_echoA "Choose the right path to create a profile & close application"
+_eval thunderbird --ProfileManager
+
