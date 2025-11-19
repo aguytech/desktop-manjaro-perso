@@ -7,10 +7,10 @@ _echoA "Choose the right path to create a profile & close application"
 _eval firefox --ProfileManager
 
 _echot "------- firefox user.js"
-path=${HOME}/.mozilla/firefox/${USER}
-if [ -d "${path}" ]; then
-	_eval ln -s "${_PATH_BS}/conf/user.js" ${path}/user.js
-	_eval chown ${USER}:${USER} ${path}
+pth=${HOME}/.mozilla/firefox/${USER}
+if [ -d "${pth}" ]; then
+	_eval ln -s "${_PATH_BS}/conf/user.js" ${pth}/user.js
+	_eval chown ${USER}:${USER} ${pth}
 fi
 
 ########################  THUNDERBIRD
