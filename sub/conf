@@ -16,6 +16,11 @@ done
 
 ########################  USER
 
+_echot "------- reduce swappiness"
+_evalr swapoff -av
+sudo sh -c 'echo vm.swappiness=20 > /etc/sysctl.d/99-swappiness.conf' # limit swap
+_evalr swapon -v
+
 _echot "------- .bash_env"
 file=${HOME}/.bash_env
 file_from=${_PATH_BS}/conf/.bash_env
