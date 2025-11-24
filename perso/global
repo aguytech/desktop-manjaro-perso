@@ -1,5 +1,16 @@
 #!/bin/bash
 
+_echot "------- python"
+packages="python python-pip python-pipx"
+${_CMD_INS} ${packages} && _partadd "${packages}" ${_FILE_PCK} \
+	|| { _echoE "Unable to install: ${packages}"; return 1; }
+
+packages="yt-dlp"
+for package in ${packages}; do
+	_echot "------- pipx"
+	_evalr pipx install ${package}
+done
+
 _echot "------- aur"
 packages="libreoffice-extension-grammalecte-fr"
 # libreoffice-extension-languagetool papirus-libreoffice-theme 
