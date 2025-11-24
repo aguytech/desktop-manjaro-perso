@@ -3,17 +3,15 @@
 ########################  REQUIRED
 
 _echot "------- required files"
-file_env=${_PATH_BASE}/bs/conf/.sh_env
-file_sh_aliases=${_PATH_BASE}/bs/conf/.sh_aliases
-file_sh_functions=${_PATH_BASE}/bs/conf/.sh_functions
-file_env_perso=${_PATH_BASE}/perso/conf/.sh_env_perso
+file_env=${_path_base}/bs/conf/.sh_env
+file_sh_aliases=${_path_base}/bs/conf/.sh_aliases
+file_sh_functions=${_path_base}/bs/conf/.sh_functions
+file_env_perso=${_path_base}/perso/conf/.sh_env_perso
 _require ${file_env} ${file_sh_aliases} ${file_sh_functions} ${file_env_perso}
 
 ########################  SYSTEM
 
-_echot "------- conf sources"
-# Change the mirror of software sources
-_evalr pacman-mirrors --country-list
+_echot "------- pacman France sources"
 _evalr pacman-mirrors -c France
 
 _echot "------- create paths"
