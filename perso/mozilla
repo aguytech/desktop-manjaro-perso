@@ -2,7 +2,7 @@
 
 ########################  FIREFOX
 
-_echot "------- profile"
+_echot "------- firefox profile"
 _echoA "Choose the right path to create a profile & close application"
  _askno "Validate to continue"
 firefox --ProfileManager
@@ -15,11 +15,7 @@ _evalr chown ${USER}:${USER} ${pth}
 
 ########################  THUNDERBIRD
 
-_echot "------- thunderbird update"
-_evalr apt  install -y thunderbird
-
 _echot "------- thunderbird profile"
 _echoA "Choose the right path to create a profile & close application"
  _askno "Validate to continue"
 thunderbird --ProfileManager
-
