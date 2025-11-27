@@ -19,7 +19,7 @@ file=${_path_base}/bs/inc
 ########################  SUB
 
 _SPATH=perso
-parts_perso="global conf root mozilla"
+parts_perso="global python conf root mozilla"
 # sublimetext sublimemerge
 
 for _PART in ${parts_perso}; do

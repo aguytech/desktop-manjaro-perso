@@ -4,7 +4,7 @@
 
 _echot "------- firefox profile"
 _echoA "Choose the right path to create a profile & close application"
- _askno "Validate to continue"
+_askno "Validate to continue"
 firefox --ProfileManager
 
 _echot "------- user.js"
@@ -17,5 +17,5 @@ _evalr chown ${USER}:${USER} ${pth}
 
 _echot "------- thunderbird profile"
 _echoA "Choose the right path to create a profile & close application"
- _askno "Validate to continue"
+_askno "Validate to continue"
 thunderbird --ProfileManager
