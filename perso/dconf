@@ -1,5 +1,0 @@
-#!/bin/bash
-
-_echot "------- dconf screensave"
-_eval "dconf write /org/gnome/desktop/screensaver/lock-delay 'uint32 3600'"
-
