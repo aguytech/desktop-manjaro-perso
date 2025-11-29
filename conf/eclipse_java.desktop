@@ -28,21 +28,13 @@ Exec=/usr/lib/firefox-developer-edition/firefox %u
 Name=Sublime Text
 Exec=sublime-text
 
-[Desktop Action GEdit]
-Name=GEdit
-Exec=gedit %U
+[Desktop Action SublimeMerge]
+Name=Sublime merge
+Exec=sublime-merge
 
 [Desktop Action Ghex]
 Name=Ghex
 Exec=ghex %F
-
-[Desktop Action GitG]
-Name=Gitg
-Exec=gitg --no-wd %U
-
-[Desktop Action Smartgit]
-Name=Smartgit
-Exec=smartgit %u
 
 [Desktop Action SquirrelSql]
 Name=Squirrel Sql
