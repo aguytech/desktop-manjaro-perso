@@ -1,0 +1,26 @@
+#!/bin/bash
+
+########################  REQUIRED
+
+file_mudita=${_path_base}/perso/xtra/Mudita24.desktop
+file_package=${_path_base}/perso/xtra/mudita24_1.0.3.tgz
+_require ${file_mudita} ${file_packages}
+
+_echot "------- install"
+pth=/tmp/mudita24
+_eval mkdir /tmp/mudita24
+_evalr tar xzf ${file_package} -C ${pth}
+for subpth in usr/bin usr/share/applications usr/share/doc usr/share/pixmaps;do
+	_evalr mv ${pth}/${subpth}/* /${subpth}
+done
+_evalr rm -fR ${pth}
+
+_echot "------- launcher"
+_keepmvts ${file_mudita}
+_eval cp -a ${file_mudita} ~/.config/autostart
+
+_echot "------- configuration"
+_echoA "Please adjust volumes and routes and save profile after vaildation."
+_askno "Validate to continue"
+_eval mudita24 -p4
+
