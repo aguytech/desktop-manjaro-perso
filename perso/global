@@ -5,6 +5,3 @@ packages="libreoffice-extension-grammalecte-fr"
 # libreoffice-extension-languagetool papirus-libreoffice-theme 
 _install_aur ${packages}
 
-_echot "------- zuki-themes"
-packages="zuki-themes"
-_install_aur ${packages}
