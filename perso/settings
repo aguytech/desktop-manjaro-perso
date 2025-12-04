@@ -65,7 +65,7 @@ _eval "gsettings set org.gnome.desktop.calendar show-weekdate false"
 ########################  PLANK
 
 _echot "------- gsettings plank"
-_eval "gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ dock-items \"['org.mozilla.Thunderbird.dockitem', 'firefox-2.dockitem', 'xfce4-terminal.dockitem', 'ca.desrt.dconf-editor.dockitem', 'desktop.dockitem']\""
+_eval "gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ dock-items \"['firefox.dockitem', 'org.mozilla.Thunderbird.dockitem', 'thunar.dockitem', 'xfce4-terminal.dockitem', 'desktop.dockitem']\""
 _eval "gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ icon-size 44"
 _eval "gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ zoom-enabled true"
 
