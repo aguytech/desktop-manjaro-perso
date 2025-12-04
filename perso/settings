@@ -114,12 +114,14 @@ _xconf_settings() {
 
 ########################  XSETTINGS
 
+_echot "------- xfconf-query xsettings"
 channel=xsettings
 _eval "xfconf-query --channel ${channel} --property /Gtk/FontName --set ${font_size}"
 _eval "xfconf-query --channel ${channel} --property /Gtk/MonospaceFontName --set ${font_size}"
 
 ########################  SCREENSAVER
 
+_echot "------- xfconf-query xfce4-screensaver"
 channel=xfce4-screensaver
 options="/saver/idle-activation/delay 15 int"
 _xconf_settings ${channel} "${options}"
@@ -135,7 +137,8 @@ _xconf_settings ${channel} "${options}"
 
 ########################  XFCE4-TERMINAL
 
-_echot "------- xfconf-query keyboards"
+_echot "------- xfconf-query xfce4-terminal"
+channel=xfce4-terminal
 options="/background-darkness 0.8 double
 /color-background '#162f13b9120b' string
 /color-foreground '#f6f6f5f5f4f4' string
