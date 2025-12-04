@@ -1,0 +1,171 @@
+#!/bin/bash
+
+# monitor channel
+#xfconf-query -c xfce4-panel -m -v
+# xfce settings GUI
+#xfce4-settings-editor
+
+########################  DATA
+
+anstmp=8
+_askno "Give the size for global desktop font (${anstmp})"
+font_size=${_ANSWER:-${anstmp}}
+
+anstmp=3600
+_askno "Give the screensaver lock-delay inseconds (${anstmp})"
+screen_lock_delay=${_ANSWER:-${anstmp}}
+
+######################################################### GSETTINGS
+
+_gnome_settings() {
+	while read key value; do
+		_eval "gsettings set $1 ${key} ${value}"
+	done <<< "$2"
+}
+
+########################  DESKTOP
+
+_echot "------- gsettings desktop"
+pth=org.gnome.desktop.interface
+options="font-name 'Noto Sans ${font_size}'
+document-font-name 'Adwaita Sans ${font_size}'
+monospace-font-name 'Adwaita Mono ${font_size}'
+gtk-color-scheme ''
+gtk-theme 'Adwaita-dark'
+icon-theme 'Papirus-Dark'
+gtk-timeout-initial 300
+gtk-timeout-repeat 50
+clock-format '24h'"
+_gnome_settings ${pth} "${options}"
+
+########################  KEYBOARD
+
+_echot "------- gsettings desktop.peripherals.keyboard"
+pth=org.gnome.desktop.peripherals.keyboard
+options="delay 'uint32 300'
+numlock-state true
+repeat-interval 'uint32 50'
+remember-numlock-state true"
+_gnome_settings ${pth} "${options}"
+
+_echot "------- gsettings desktop.*"
+# background
+_eval "gsettings set org.gnome.desktop.background picture-uri 'file:///usr/share/backgrounds/gnome/adwaita-l.jpg'"
+# palette
+_eval "gsettings set org.gnome.desktop.interface gtk-color-palette 'black:white:gray50:red:purple:blue:light blue:green:yellow:orange:lavender:brown:goldenrod4:dodger blue:pink:light green:gray10:gray30:gray75:gray90'"
+# screensaver
+_eval "gsettings set org.gnome.desktop.screensaver lock-delay 'uint32 ${screen_lock_delay}'"
+# sound
+_eval "gsettings set org.gnome.desktop.sound event-sounds false"
+# num-lock
+_eval "gsettings set org.gnome.desktop.peripherals.keyboard remember-numlock-state true"
+# calendar
+_eval "gsettings set org.gnome.desktop.calendar show-weekdate false"
+
+########################  PLANK
+
+_echot "------- gsettings plank"
+_eval "gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ dock-items \"['org.mozilla.Thunderbird.dockitem', 'firefox-2.dockitem', 'xfce4-terminal.dockitem', 'ca.desrt.dconf-editor.dockitem', 'desktop.dockitem']\""
+_eval "gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ icon-size 44"
+_eval "gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ zoom-enabled true"
+
+########################  MELD
+
+_echot "------- gsettings meld"
+pth=org.gnome.meld
+options="custom-font 'monospace, ${font_size}'
+highlight-current-line true
+indent-width 4
+prefer-dark-theme true
+show-line-numbers true
+show-overview-map true
+style-scheme 'meld-dark-perso'
+use-system-font true"
+_gnome_settings ${pth} "${options}"
+
+########################  WM
+
+_echot "------- gsettings vim"
+pth=org.gnome.desktop.wm.preferences
+options="audible-bell false
+titlebar-font 'Adwaita Sans Bold 10'
+visual-bell false"
+_gnome_settings ${pth} "${options}"
+
+########################  GTK
+
+_echot "------- gsettings gtk"
+pth=org.gtk.Settings.FileChooser
+options="expand-folders true
+show-hidden true"
+_gnome_settings ${pth} "${options}"
+
+######################################################### XCONF-QUERY
+
+_xconf_settings() {
+	while read key value type; do
+		if xfconf-query -c thunar -p ${key} -v 2>/dev/null; then
+			_eval "xfconf-query --channel $1 --property ${key} --set ${value}"
+		else
+			_eval "xfconf-query --channel $1 --property ${key} --create --type ${type} --set ${value}"
+		fi
+	done <<< "$2"
+}
+
+########################  XSETTINGS
+
+channel=xsettings
+_eval "xfconf-query --channel ${channel} --property /Gtk/FontName --set ${font_size}"
+_eval "xfconf-query --channel ${channel} --property /Gtk/MonospaceFontName --set ${font_size}"
+
+########################  SCREENSAVER
+
+channel=xfce4-screensaver
+options="/saver/idle-activation/delay 15 int"
+_xconf_settings ${channel} "${options}"
+
+########################  KEYBOARDS
+
+_echot "------- xfconf-query keyboards"
+channel=keyboards
+options="/Default/KeyRepeat/Delay 300 int
+/Default/Numlock true bool
+/Default/KeyRepeat/Rate 50 int"
+_xconf_settings ${channel} "${options}"
+
+########################  XFCE4-TERMINAL
+
+_echot "------- xfconf-query keyboards"
+options="/background-darkness 0.8 double
+/color-background '#162f13b9120b' string
+/color-foreground '#f6f6f5f5f4f4' string
+/color-palette '(rgb(94,92,100);rgb(237,51,59);rgb(87,227,137);rgb(248,228,92);rgb(98,160,234);rgb(220,138,221);rgb(81,216,218);rgb(246,245,244);rgb(85,87,83);rgb(239,41,41);rgb(138,226,52);rgb(252,233,79);rgb(115,159,207);rgb(173,127,168);rgb(52,226,226);rgb(238,238,236))' string
+/color-cursor-use-default false bool
+/color-cursor '#ffff78780000' string
+/color-selection-use-default false bool
+/color-selection-background '#c6c646460000' string
+/font-use-system true bool
+/misc-bell-urgent true bool
+/misc-copy-on-select true bool
+/misc-default-geometry '120x24' string
+/misc-middle-click-opens-uri true bool
+/misc-new-tab-adjacent true bool
+/misc-show-unsafe-paste-dialog false bool
+/misc-slim-tabs true bool"
+_xconf_settings ${channel} "${options}"
+
+########################  THUNAR
+
+_echot "------- xfconf-query thunar"
+pid=$(ps -C Thunar -o pid=)
+[ "${pid}" ] && _echot "------- close thunar" && _evalr kill ${pid}
+
+channel=thunar
+options="/last-location-bar ThunarLocationButtons
+/last-show-hidden true
+/last-view ThunarDetailsView
+/last-view  ThunarDetailsView string
+/misc-date-style THUNAR_DATE_STYLE_SHORT string
+/misc-directory-specific-settings true bool
+/misc-show-delete-action true bool"
+_xconf_settings ${channel} "${options}"
