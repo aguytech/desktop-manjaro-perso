@@ -8,3 +8,9 @@ _install_aur ${packages}
 packages="libreoffice-extension-grammalecte-fr"
 # libreoffice-extension-languagetool papirus-libreoffice-theme 
 _install_aur ${packages}
+
+_echot "------- language fr"
+packages="hunspell-fr hyphen-fr mythes-fr tesseract-data-fra"
+packages+=" firefox-i18n-fr libreoffice-still-fr"
+_install_pcks ${packages}
+
