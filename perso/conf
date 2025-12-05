@@ -101,8 +101,7 @@ done
 _echot "------- language fr"
 packages="hunspell-fr hyphen-fr mythes-fr tesseract-data-fra"
 packages+=" firefox-i18n-fr libreoffice-still-fr"
-${_CMD_INS} ${packages} && _partadd "${packages}" ${_FILE_PCK} \
-	|| { _echoE "Unable to install: ${packages}"; return 1; }
+_install_pcks ${packages}
 
 _echot "------- gtk bookmarks"
 file=~/.config/gtk-3.0/bookmarks
