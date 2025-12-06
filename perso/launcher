@@ -1,0 +1,394 @@
+#!/bin/bash
+
+# xprop WM_CLASS
+########################  MAIN
+
+pth=~/.local/share/applications
+[ -d "${pth}" ] || mkdir -p ${pth}
+
+_echot "------- xfce-settings-manager"
+name=xfce-settings-manager
+menuadd="Separator;ManjaroSettings;XfceSettings;LightdmGtk;Qt6ct;DconfSet;PlankSet;Separator;PamacManager;TaskManager;Gparted;DiskUsage;"
+_eval cp -n /usr/share/applications/${name}.desktop ${pth}
+if ! grep -q '\[Desktop Action Separator\]' ${pth}/${name}.desktop; then
+	grep -q '^Actions=' ${pth}/${name}.desktop \
+		&& sed -i "s|^\(Actions=.*\)$|\1${menuadd}|" ${pth}/${name}.desktop \
+		|| echo "Actions=${menuadd}" >> ${pth}/${name}.desktop
+	echo "
+[Desktop Action Separator]
+Name=−−−−−−−−−−
+Exec=
+
+[Desktop Action PamacManager]
+Name=Pamac Manager
+Exec=pamac-manager
+
+[Desktop Action XfceSettings]
+Name=xfce4 settings
+Exec=xfce4-settings-editor
+
+[Desktop Action TaskManager]
+Name=Task manager
+Exec=xfce4-taskmanager
+
+[Desktop Action LightdmGtk]
+Name=lightdm Gtk greeter settings
+Exec=lightdm-gtk-greeter-settings-pkexec
+
+[Desktop Action Qt6ct]
+Name=QT6 settings
+Exec=qt6ct
+
+[Desktop Action DiskUsage]
+Name=Disk Usage
+Exec=baobab
+
+[Desktop Action Gparted]
+Name=Gparted
+Exec=gksudo gparted
+
+[Desktop Action DconfSet]
+Name=Dconf settings
+Exec=dconf-editor
+
+[Desktop Action ManjaroSettings]
+Name=Manjaro settings
+Exec=manjaro-settings-manager
+" >> ${pth}/${name}.desktop
+fi
+sed -i 's|^OnlyShowIn=XFCE;|#OnlyShowIn=XFCE;|' ${pth}/${name}.desktop
+
+_echot "------- thunar"
+name=thunar
+menuadd="ThunarNode1;Separator;Terminal;SshDev;SshS;SshNode1;SshLxd;"
+_eval cp -n /usr/share/applications/${name}.desktop ${pth}
+if ! grep -q '\[Desktop Action Separator\]' ${pth}/${name}.desktop; then
+	grep -q '^Actions=' ${pth}/${name}.desktop \
+		&& sed -i "s|^\(Actions=.*\)$|\1${menuadd}|" ${pth}/${name}.desktop \
+		|| echo "Actions=${menuadd}" >> ${pth}/${name}.desktop
+	echo "
+[Desktop Action Separator]
+Name=−−−−−−−−−−
+Exec=
+
+[Desktop Action ThunarNode1]
+Name=Thunar node1
+Exec=thunar_newtabs /usr/local/bs sftp://root@node1/
+
+[Desktop Action Terminal]
+Name=Terminal
+Exec=xfce4-terminal
+
+[Desktop Action SshDev]
+Name=ssh dev
+Exec=xfce4-terminal --tab --tab --title=node1 -x ssh-server node1
+
+[Desktop Action SshS]
+Name=ssh server
+Exec=xfce4-terminal --title=server -x ssh-server
+
+[Desktop Action SshNode1]
+Name=ssh node1
+Exec=xfce4-terminal --tab --title=node1 -x ssh-server node1
+
+[Desktop Action SshLxd]
+Name=ssh LXD
+Exec=xfce4-terminal --tab --title=LXD -x ssh-lxd
+" >> ${pth}/${name}.desktop
+fi
+
+_echot "------- mousepad"
+name=org.xfce.mousepad
+menuadd="Meld;GHex;Separator;Terminal;SshDev;SshS;SshNode1;SshLxd;"
+_eval cp -n /usr/share/applications/${name}.desktop ${pth}
+if ! grep -q '\[Desktop Action Separator\]' ${pth}/${name}.desktop; then
+	grep -q '^Actions=' ${pth}/${name}.desktop \
+		&& sed -i "s|^\(Actions=.*\)$|\1${menuadd}|" ${pth}/${name}.desktop \
+		|| echo "Actions=${menuadd}" >> ${pth}/${name}.desktop
+	echo "
+[Desktop Action Separator]
+Name=−−−−−−−−−−
+Exec=
+
+[Desktop Action Meld]
+Name=Meld
+Exec=meld
+
+[Desktop Action Terminal]
+Name=Terminal
+Exec=xfce4-terminal
+
+[Desktop Action SshDev]
+Name=ssh dev
+Exec=xfce4-terminal --tab --tab --title=node1 -x ssh-server node1
+
+[Desktop Action SshS]
+Name=ssh server
+Exec=xfce4-terminal --title=server -x ssh-server
+
+[Desktop Action SshNode1]
+Name=ssh node1
+Exec=xfce4-terminal --tab --title=node1 -x ssh-server node1
+
+[Desktop Action SshLxd]
+Name=ssh lxd
+Exec=xfce4-terminal --tab --title=LXD -x ssh-server ssh-lxd
+" >> ${pth}/${name}.desktop
+fi
+
+_echot "------- xfce4-terminal"
+name=xfce4-terminal
+menuadd="Separator;SshDev;SshS;SshNode1;SshLxd;Separator;Thunar;ThunarNode1;"
+_eval cp -n /usr/share/applications/${name}.desktop ${pth}
+if ! grep -q '\[Desktop Action Separator\]' ${pth}/${name}.desktop; then
+	grep -q '^Actions=' ${pth}/${name}.desktop \
+		&& sed -i "s|^\(Actions=.*\)$|\1${menuadd}|" ${pth}/${name}.desktop \
+		|| echo "Actions=${menuadd}" >> ${pth}/${name}.desktop
+	echo "
+[Desktop Action Separator]
+Name=−−−−−−−−−−
+Exec=
+
+[Desktop Action SshDev]
+Name=ssh dev
+Exec=xfce4-terminal --tab --tab --title=node1 -x ssh-server node1
+
+[Desktop Action SshS]
+Name=ssh server
+Exec=xfce4-terminal --title=server -x ssh-server
+
+[Desktop Action SshNode1]
+Name=ssh node1
+Exec=xfce4-terminal --tab --title=node1 -x ssh-server node1
+
+[Desktop Action SshLxd]
+Name=ssh lxd
+Exec=xfce4-terminal --tab --title=LXD -x ssh-server ssh-lxd
+
+[Desktop Action Thunar]
+Name=Thunar
+Exec=thunar
+
+[Desktop Action ThunarNode1]
+Name=Thunar node1
+Exec=thunar_newtabs /usr/local/bs sftp://root@node1/
+" >> ${pth}/${name}.desktop
+fi
+
+_echot "------- firefox"
+name=firefox
+menuadd="Separator;ProfileUser;ProfileManager;SafeMode;Separator;FirefoxDev;Chromium;Separator;Qarte;aMule;"
+_eval cp -n /usr/share/applications/${name}.desktop ${pth}
+if ! grep -q '\[Desktop Action Separator\]' ${pth}/${name}.desktop; then
+	grep -q '^Actions=' ${pth}/${name}.desktop \
+		&& sed -i "s|^\(Actions=.*\)$|\1${menuadd}|" ${pth}/${name}.desktop \
+		|| echo "Actions=${menuadd}" >> ${pth}/${name}.desktop
+	echo "
+[Desktop Action Separator]
+Name=−−−−−−−−−−
+Exec=
+
+[Desktop Action ProfileUser]
+Name=Profile ${USER}
+Exec=firefox -P ${USER}
+
+[Desktop Action SafeMode]
+Name=Safe Mode
+Exec=firefox --safe-mode
+
+[Desktop Action ProfileManager]
+Name=Profile Manager
+Exec=firefox --ProfileManager
+
+[Desktop Action Thunderbird]
+Name=Thunderbird
+Exec=thunderbird
+
+[Desktop Action FirefoxDev]
+Name=Firefox Developper Edition
+Exec=firefox-developer-edition
+
+[Desktop Action Chromium]
+Name=Chromium browser
+Exec=chromium-browser
+
+[Desktop Action Qarte]
+Name=Qarte
+Exec=qarte
+
+[Desktop Action aMule]
+Name=aMule
+Exec=amule
+
+[Desktop Action Skype]
+Name=Skype
+Exec=skype %U
+
+[Desktop Action Pidgin]
+Name=Pidgin
+Exec=pidgin
+" >> ${pth}/${name}.desktop
+fi
+
+_echot "------- thunderbird"
+name=org.mozilla.Thunderbird
+menuadd="Separator;Addressbook;ProfileManager;ProfileExtend;"
+_eval cp -n /usr/share/applications/${name}.desktop ${pth}
+if ! grep -q '\[Desktop Action Separator\]' ${pth}/${name}.desktop; then
+	grep -q '^Actions=' ${pth}/${name}.desktop \
+		&& sed -i "s|^\(Actions=.*\)$|\1${menuadd}|" ${pth}/${name}.desktop \
+		|| echo "Actions=${menuadd}" >> ${pth}/${name}.desktop
+	echo "
+[Desktop Action Separator]
+Name=−−−−−−−−−−
+Exec=
+
+[Desktop Action Addressbook]
+Name=Addressbook
+Exec=thunderbird -addressbook
+
+[Desktop Action ProfileManager]
+Name=Profile Manager
+Exec=thunderbird --ProfileManager
+
+[Desktop Action ProfileExtend]
+Name=Profile  Extend
+Exec=thunderbird -P extend
+" >> ${pth}/${name}.desktop
+fi
+
+_echot "------- gmusicbrowser"
+name=gmusicbrowser
+menuadd="Separator;Lollypop;PulseaudioEqualizer;Separator;Audacity;Easytag;SoundJuicer;SoundConverter;"
+_eval cp -n /usr/share/applications/${name}.desktop ${pth}
+if ! grep -q '\[Desktop Action Separator\]' ${pth}/${name}.desktop; then
+	grep -q '^Actions=' ${pth}/${name}.desktop \
+		&& sed -i "s|^\(Actions=.*\)$|\1${menuadd}|" ${pth}/${name}.desktop \
+		|| echo "Actions=${menuadd}" >> ${pth}/${name}.desktop
+	echo "
+[Desktop Action Separator]
+Name=−−−−−−−−−−
+Exec=
+
+[Desktop Action Audacity]
+Name=Audacity
+Exec=audacity
+
+[Desktop Action Easytag]
+Name=Easytag
+Exec=easytag %F
+
+[Desktop Action Mixxx]
+Name=Mixxx
+Exec=mixxx
+
+[Desktop Action SoundJuicer]
+Name=SoundJuicer
+Exec=sound-juicer
+
+[Desktop Action SoundConverter]
+Name=Sound Converter
+Exec=soundconverter %U
+
+[Desktop Action PulseaudioEqualizer]
+Name=Pulseaudio Equalizer
+Exec=qpaeq
+" >> ${pth}/${name}.desktop
+fi
+
+_echot "------- mpv"
+name=mpv
+menuadd="Separator;Celluloid;HandBrake;SubtitleEditor;MKVtoolnix;"
+_eval cp -n /usr/share/applications/${name}.desktop ${pth}
+if ! grep -q '\[Desktop Action Separator\]' ${pth}/${name}.desktop; then
+	grep -q '^Actions=' ${pth}/${name}.desktop \
+		&& sed -i "s|^\(Actions=.*\)$|\1${menuadd}|" ${pth}/${name}.desktop \
+		|| echo "Actions=${menuadd}" >> ${pth}/${name}.desktop
+	echo "
+[Desktop Action Separator]
+Name=−−−−−−−−−−
+Exec=
+
+[Desktop Action Celluloid]
+Name=Celluloid
+Exec=celluloid
+
+[Desktop Action MKVtoolnix]
+Name=MKVtoolnix GUI
+Exec=mkvtoolnix-gui
+
+[Desktop Action SubtitleEditor]
+Name=Subtitle editor
+Exec=subtitleeditor
+
+[Desktop Action HandBrake]
+Name=HandBrake
+Exec=ghb
+" >> ${pth}/${name}.desktop
+fi
+
+_echot "------- gimp"
+name=gimp
+menuadd="gThumb;Inkscape;Separator;XSane;"
+_eval cp -n /usr/share/applications/${name}.desktop ${pth}
+if ! grep -q '\[Desktop Action Separator\]' ${pth}/${name}.desktop; then
+	grep -q '^Actions=' ${pth}/${name}.desktop \
+		&& sed -i "s|^\(Actions=.*\)$|\1${menuadd}|" ${pth}/${name}.desktop \
+		|| echo "Actions=${menuadd}" >> ${pth}/${name}.desktop
+	echo "
+[Desktop Action Separator]
+Name=−−−−−−−−−−
+Exec=
+
+[Desktop Action gThumb]
+Name=gThumb
+Exec=gthumb %U
+
+[Desktop Action Inkscape]
+Name=Inkscape
+Exec=inkscape %F
+
+[Desktop Action XSane]
+Name=XSane
+Exec=xsane
+" >> ${pth}/${name}.desktop
+fi
+
+_echot "------- libreoffice-startcenter"
+name=libreoffice-startcenter
+menuadd="Separator;Archimate;Zotero;Galculator;QpdfView;Gcolor3;FontViewer;XfBurn;Brasero;"
+_eval cp -n /usr/share/applications/${name}.desktop ${pth}
+if ! grep -q '\[Desktop Action Separator\]' ${pth}/${name}.desktop; then
+	grep -q '^Actions=' ${pth}/${name}.desktop \
+		&& sed -i "s|^\(Actions=.*\)$|\1${menuadd}|" ${pth}/${name}.desktop \
+		|| echo "Actions=${menuadd}" >> ${pth}/${name}.desktop
+	echo "
+[Desktop Action Separator]
+Name=−−−−−−−−−−
+Exec=
+
+[Desktop Action Archimate]
+Name=Archimate
+Exec=archi
+
+[Desktop Action Zotero]
+Name=Zotero
+Exec=zotero
+
+[Desktop Action QpdfView]
+Name=QpdfView
+Exec=qpdfview
+
+[Desktop Action Galculator]
+Name=Galculator
+Exec=galculator
+
+[Desktop Action Gcolor3]
+Name=Color Picker
+Exec=gcolor3
+
+[Desktop Action FontViewer]
+Name=Font viewer
+Exec=gtk2fontsel
+" >> ${pth}/${name}.desktop
+fi

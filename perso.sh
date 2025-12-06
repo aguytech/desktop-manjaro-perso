@@ -20,7 +20,7 @@ sudo ping -c1 google.com >/dev/null 2>&1 || _exite "Installation needs internet 
 ########################  SUB
 
 _SPATH=perso
-parts_perso="python libreoffice conf git root"
+parts_perso="python libreoffice conf launcher git root"
 for _PART in ${parts_perso}; do
 	_source_sub "${_PART}" ${_SPATH}
 done
