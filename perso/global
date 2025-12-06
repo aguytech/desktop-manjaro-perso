@@ -1,9 +1,5 @@
 #!/bin/bash
 
-_echot "------- sayonara-player"
-packages="sayonara-player"
-_install_aur ${packages}
-
  _echot "------- libreoffice"
 packages="libreoffice-extension-grammalecte-fr"
 # libreoffice-extension-languagetool papirus-libreoffice-theme 
