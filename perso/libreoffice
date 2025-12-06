@@ -9,4 +9,3 @@ _echot "------- language fr"
 packages="hunspell-fr hyphen-fr mythes-fr tesseract-data-fra"
 packages+=" firefox-i18n-fr libreoffice-still-fr"
 _install_pcks ${packages}
-
