@@ -101,11 +101,11 @@ _gnome_settings ${pth} "${options}"
 ######################################################### XCONF-QUERY
 
 _xconf_settings() {
-	while read key value type; do
-		if xfconf-query -c thunar -p ${key} -v 2>/dev/null; then
-			_eval "xfconf-query --channel $1 --property ${key} --set ${value}"
+	while read -r key value type; do
+		if xfconf-query -c $1 -p ${key} -v 2>/dev/null; then
+			_eval "xfconf-query --channel $1 --property ${key} --set ${value//£/ }"
 		else
-			_eval "xfconf-query --channel $1 --property ${key} --create --type ${type} --set ${value}"
+			_eval "xfconf-query --channel $1 --property ${key} --create --type ${type} --set ${value//£/ }"
 		fi
 	done <<< "$2"
 }
@@ -114,8 +114,9 @@ _xconf_settings() {
 
 channel=xsettings
 _echot "------- xfconf-query ${channel}"
-_eval "xfconf-query --channel ${channel} --property /Gtk/FontName --set ${font_size}"
-_eval "xfconf-query --channel ${channel} --property /Gtk/MonospaceFontName --set ${font_size}"
+options="/Gtk/FontName 'Noto£Sans£${font_size}' string
+/Gtk/MonospaceFontName  'Monospace£${font_size}' string"
+_xconf_settings ${channel} "${options}"
 
 ########################  SCREENSAVER
 
@@ -137,13 +138,13 @@ _xconf_settings ${channel} "${options}"
 
 channel=xfce4-terminal
 _echot "------- xfconf-query ${channel}"
-options="/background-mode 'TERMINAL_BACKGROUND_SOLID'
+options="/background-mode 'TERMINAL_BACKGROUND_SOLID' string
 /background-darkness 0.8 double
 /color-background '#258b21861ec9' string
 /color-foreground '#f6f6f5f5f4f4' string
 /color-cursor-use-default false bool
 /color-cursor '#ffff78780000' string
-/color-palette 'rgb(94,92,100);rgb(237,51,59);rgb(80,225,80);rgb(248,228,92);rgb(98,160,234);rgb(220,138,221);rgb(77,218,218);rgb(246,245,244);rgb(85,85,85);rgb(255,85,85);rgb(85,255,85);rgb(255,255,85);rgb(53,132,228);rgb(220,138,221);rgb(85,255,255);rgb(255,255,255)' string
+/color-palette 'rgb(105,103,102);rgb(237,51,59);rgb(80,225,80);rgb(248,228,92);rgb(98,160,234);rgb(220,138,221);rgb(77,218,218);rgb(246,245,244);rgb(139,137,136);rgb(255,85,85);rgb(85,255,85);rgb(255,255,85);rgb(53,132,228);rgb(220,138,221);rgb(85,255,255);rgb(255,255,255)' string
 /color-selection-use-default false bool
 /color-selection-background '#c6c646460000' string
 /font-use-system true bool
@@ -154,7 +155,7 @@ options="/background-mode 'TERMINAL_BACKGROUND_SOLID'
 /misc-new-tab-adjacent true bool
 /misc-show-unsafe-paste-dialog false bool
 /misc-slim-tabs true bool
-/background-mode 'TERMINAL_BACKGROUND_TRANSPARENT'"
+/background-mode 'TERMINAL_BACKGROUND_TRANSPARENT' string"
 _xconf_settings ${channel} "${options}"
 
 ########################  THUNAR
@@ -164,30 +165,24 @@ _echot "------- xfconf-query ${channel}"
 pid=$(ps -C Thunar -o pid=)
 [ "${pid}" ] && _echot "------- close thunar" && _evalr kill ${pid}
 
-options="/last-location-bar ThunarLocationButtons
-/last-show-hidden true
-/last-view ThunarDetailsView
-/last-view  ThunarDetailsView string
-/misc-date-style THUNAR_DATE_STYLE_SHORT string
+options="/last-location-bar 'ThunarLocationButtons' string
+/last-show-hidden true bool
+/last-view 'ThunarDetailsView' string
+/last-view 'ThunarDetailsView' string
+/misc-date-style 'THUNAR_DATE_STYLE_SHORT' string
 /misc-directory-specific-settings true bool
 /misc-show-delete-action true bool"
-_xconf_settings ${channel} "${options}"
-
-########################  DESKTOP
-
-channel=xfce4-desktop
-_echot "------- xfconf-query ${channel}"
-options="/backdrop/screen0/monitorHDMI-1/workspace0/last-image '/usr/share/backgrounds/xfce/wp-cat.png'"
 _xconf_settings ${channel} "${options}"
 
 ########################  SHORTCUTS
 
 channel=xfce4-keyboard-shortcuts
 _echot "------- xfconf-query ${channel}"
-options="'/commands/custom/<Primary><Alt>t' 'xfce4-terminal \-e \"tmux a\"' string
+options="'/commands/custom/<Primary><Alt>t' 'xfce4-terminal£-e£\"tmux£a\"' string
 '/commands/custom/<Primary><Shift><Alt>t' 'xfce4-terminal' string
-'/commands/custom/<Primary><Alt>d' 'xfce4-terminal --drop-down' string
-'/commands/custom/<Primary><Alt>g' 'galculator' string"
+'/commands/custom/<Primary><Alt>d' 'xfce4-terminal£--drop-down' string
+'/commands/custom/<Primary><Alt>g' 'galculator' string
+'/commands/custom/Super_L' 'xfce4-popup-whiskermenu' string"
 _xconf_settings ${channel} "${options}"
 
 
