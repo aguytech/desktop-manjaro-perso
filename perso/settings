@@ -114,7 +114,8 @@ _xconf_settings() {
 
 channel=xsettings
 _echot "------- xfconf-query ${channel}"
-options="/Gtk/FontName 'Noto£Sans£${font_size}' string
+options="/Gtk/CursorThemeSize 16 int
+/Gtk/FontName 'Noto£Sans£${font_size}' string
 /Gtk/MonospaceFontName  'Monospace£${font_size}' string"
 _xconf_settings ${channel} "${options}"
 
