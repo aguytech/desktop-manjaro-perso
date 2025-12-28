@@ -175,6 +175,15 @@ options="/last-location-bar 'ThunarLocationButtons' string
 /misc-show-delete-action true bool"
 _xconf_settings ${channel} "${options}"
 
+########################  VOLMAN
+
+channel=thunar-volman
+_echot "------- thunar-volman"
+options="/autobrowse/enabled false bool
+/automount-drives/enabled false bool
+/automount-media/enabled false bool"
+_xconf_settings ${channel} "${options}"
+
 ########################  SHORTCUTS
 
 channel=xfce4-keyboard-shortcuts
@@ -185,6 +194,3 @@ options="'/commands/custom/<Primary><Alt>t' 'xfce4-terminal£-e£\"tmux£a\"' st
 '/commands/custom/<Primary><Alt>g' 'galculator' string
 '/commands/custom/Super_L' 'xfce4-popup-whiskermenu' string"
 _xconf_settings ${channel} "${options}"
-
-
-
