@@ -129,7 +129,7 @@ _askno "Validate to continue"
 thunderbird --ProfileManager
 
 _echot "------- thunderbird launcher"
-name=org.mozilla.Thunderbird.desktop
+name=org.mozilla.Thunderbird
 file=/usr/share/applications/${name}.desktop
 pth=~/.local/share/applications
 if [ -f ${file} ]; then
