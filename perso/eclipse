@@ -122,8 +122,8 @@ grep -q '^-Duser' ${file} || sed -i "/^-vmargs/ a-Duser.home=${HOME}/.eclipse_${
 sed -i "/^-Dosgi.instance.area.default/ s|=.*|=${pth_proj}/init|" ${file}
 #sed -i "/^-Dosgi.instance.area.default/ s|=.*|=${pth_proj}/eclipse-workspaces-${_ECLIPSE_THEME}|" ${file}
 
-_echot "------- jdk src doc"
-_install_pcks openjdk-src openjdk-doc
+#_echot "------- jdk src doc"
+#_install_pcks openjdk-src openjdk-doc
 
 <<KEEP
 ####  marketplace
