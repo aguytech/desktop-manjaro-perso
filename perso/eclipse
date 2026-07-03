@@ -61,7 +61,7 @@ done
 
 if [ "${_ECLIPSE_DATE}" ]; then
 
-	[ -h ~/dev ] || ln -s /home/shared/dev ~/dev
+	[ -h ~/dev ] || _eval ln -s /home/shared/dev ~/dev
 	backup-soft --restore ${_ECLIPSE_DATE} eclipse_${_ECLIPSE_THEME} --force
 
 ####################  FRESH INSTALL
