@@ -40,6 +40,9 @@ done
 
 ########################  FIREFOX
 
+_echot "------- firefox install"
+_install_pcks firefox
+
 _echot "------- firefox launcher"
 name=firefox
 file=/usr/share/applications/${name}.desktop
@@ -117,13 +120,16 @@ _evalr chown ${USER}:${USER} ${pth}
 
 ########################  THUNDERBIRD
 
+_echot "------- thunderbird install"
+_install_pcks thunderbird
+
 _echot "------- thunderbird profile"
 _echoA "Choose the right path to create a profile & close application"
 _askno "Validate to continue"
 thunderbird --ProfileManager
 
 _echot "------- thunderbird launcher"
-name=thunderbird
+name=org.mozilla.Thunderbird.desktop
 file=/usr/share/applications/${name}.desktop
 pth=~/.local/share/applications
 if [ -f ${file} ]; then
